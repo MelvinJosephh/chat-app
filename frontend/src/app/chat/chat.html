@@ -1,0 +1,79 @@
+<div class="chat-wrapper">
+  <!-- Username Input (shown before connecting) -->
+  <div *ngIf="showUsernameInput" class="username-form">
+    <h2>Join Chat</h2>
+    <div class="form-group">
+      <input 
+        [(ngModel)]="username" 
+        type="text" 
+        placeholder="Enter your username"
+        (keyup.enter)="joinChat()"
+        class="input-field">
+    </div>
+    <div class="form-group">
+      <input 
+        [(ngModel)]="room" 
+        type="text" 
+        placeholder="Room name (default: general)"
+        (keyup.enter)="joinChat()"
+        class="input-field">
+    </div>
+    <button (click)="joinChat()" class="btn-join">Join Chat</button>
+  </div>
+
+  <!-- Chat Interface (shown after connecting) -->
+  <div *ngIf="!showUsernameInput" class="chat-container">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="header-info">
+        <h3>Chat Room: {{ room }}</h3>
+        <span class="username">{{ username }}</span>
+      </div>
+      <div class="header-status">
+        <span [class.connected]="isConnected" [class.disconnected]="!isConnected" class="status-indicator">
+          {{ isConnected ? '● Connected' : '○ Disconnected' }}
+        </span>
+        <button (click)="leaveChat()" class="btn-leave">Leave</button>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="messages-container">
+      <div *ngIf="messages.length === 0" class="no-messages">
+        No messages yet. Start the conversation!
+      </div>
+      
+      <div *ngFor="let msg of messages" 
+           [ngClass]="{
+             'message': true,
+             'message-join': msg.type === 'join',
+             'message-leave': msg.type === 'leave',
+             'message-own': msg.username === username && msg.type === 'message',
+             'message-other': msg.username !== username && msg.type === 'message'
+           }">
+        <div class="message-header">
+          <strong class="message-username">{{ msg.username }}</strong>
+          <span class="message-time">{{ msg.timestamp | date:'short' }}</span>
+        </div>
+        <div class="message-content">{{ msg.content }}</div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-container">
+      <input 
+        [(ngModel)]="messageInput" 
+        type="text"
+        placeholder="Type a message..."
+        (keyup.enter)="sendMessage()"
+        [disabled]="!isConnected"
+        class="message-input">
+      <button 
+        (click)="sendMessage()" 
+        [disabled]="!isConnected || !messageInput.trim()"
+        class="btn-send">
+        Send
+      </button>
+    </div>
+  </div>
+</div>
