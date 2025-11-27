@@ -1,7 +1,7 @@
 # chat-app
 A real-time chat application with a Go backend and Angular frontend, supporting multiple rooms and live messaging via WebSockets.
 
-# ############Features###########
+# Features
 ->Real-time messaging using WebSockets
 ->Multiple chat rooms
 ->Username-based identification
@@ -9,7 +9,7 @@ A real-time chat application with a Go backend and Angular frontend, supporting 
 ->Health check endpoint
 ->CORS enabled for frontend-backend integration
 
-# ###########Backend (Go)##########
+# Backend (Go)
 # Requirements
 -> Go 1.21+
 -> Gorilla WebSocket package (github.com/gorilla/websocket)
@@ -26,7 +26,7 @@ Server runs on http://localhost:8080
 | `/ws`     | WebSocket | Connect to the chat server. Query params: `username`, `room` |
 | `/health` | GET       | Health check endpoint                                        |
 
-# ##########Websocket Example##########
+# Websocket Example
 const socket = new WebSocket("ws://localhost:8080/ws?username=Alice&room=general");
 
 socket.onmessage = (event) => {
@@ -40,14 +40,14 @@ socket.onopen = () => {
 
 # (You can run this example on Developer tools)
 
-# ######################### Frontend (Angular)#####################################
+# Frontend (Angular)
 Run the frontend
 cd frontend
 npm install
 ng serve -o
 Open http://localhost:4200
 
-# ##########Project Structure##############
+# Project Structure
 chat-app/
 ├─ backend/       # Go WebSocket server
 │  └─ main.go
@@ -58,7 +58,7 @@ chat-app/
 └─ package.json
 
 
-# ##############Usage###########
+# Usage
 Start the Go backend
 Start the Angular frontend
 Open multiple browser tabs to simulate multiple users
